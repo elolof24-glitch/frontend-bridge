@@ -19,7 +19,8 @@ const tokens = [
 let state = {
   fromChain: chains[1],
   toChain: null,
-  token: tokens[0]
+  token: tokens[0],
+  selectedRouteIndex: 0
 };
 
 const routeData = [
@@ -39,8 +40,8 @@ const routeData = [
     badgeClass: ''
   },
   {
-    router: 'Zip',
-    routerFullName: 'Zip',
+    router: 'Gas.zip',
+    routerFullName: 'Gas.zip',
     receiveAmount: '9.9959',
     receiveSymbol: 'ETH',
     receiveUsd: '$18,413.41',
@@ -48,8 +49,8 @@ const routeData = [
     gas: 'gas < $0.01',
     slippage: 'slippage 0.05%',
     loss: 'loss 0.041%',
-    url: 'https://zipswap.io',
-    logo: './logos/routers/zip.png',
+    url: 'https://www.gas.zip/',
+    logo: './logos/routers/gaszip.png',
     badge: 'Fast',
     badgeClass: 'gray'
   },
@@ -70,13 +71,17 @@ const routeData = [
   }
 ];
 
+function logoFallback(img, label) {
+  return `this.onerror=null;this.outerHTML='<span class="logo-fallback">${label}</span>'`;
+}
+
 function renderChains() {
   const root = document.getElementById('chains');
   if (!root) return;
 
   root.innerHTML = chains.map(chain => `
     <button class="item ${state.fromChain?.id === chain.id ? 'active' : ''}" data-chain="${chain.id}" type="button">
-      <div class="ico"><img src="${chain.logo}" alt="${chain.name} logo"></div>
+      <div class="ico"><img src="${chain.logo}" alt="${chain.name} logo" onerror="${logoFallback('this', chain.name[0])}"></div>
       <div class="name">${chain.name}</div>
       <div class="chev">›</div>
     </button>
@@ -89,7 +94,7 @@ function renderTokens() {
 
   root.innerHTML = tokens.map(token => `
     <button class="token ${state.token?.id === token.id ? 'active' : ''}" data-token="${token.id}" type="button">
-      <div class="ico"><img src="${token.logo}" alt="${token.name} logo"></div>
+      <div class="ico"><img src="${token.logo}" alt="${token.name} logo" onerror="${logoFallback('this', token.symbol[0])}"></div>
       <div class="name">${token.name}</div>
       <div class="rightval">${token.symbol}</div>
       ${state.token?.id === token.id ? '<div>✓</div>' : ''}
@@ -104,7 +109,7 @@ function renderSelected() {
   if (from) {
     from.innerHTML = `
       <span style="display:flex;align-items:center;gap:10px;">
-        <img class="ico" src="${state.fromChain.logo}" alt="${state.fromChain.name} logo" style="width:24px;height:24px;">
+        <img class="ico" src="${state.fromChain.logo}" alt="${state.fromChain.name} logo" style="width:24px;height:24px;" onerror="${logoFallback('this', state.fromChain.name[0])}">
         ${state.fromChain.name}
       </span>
       <span>⌄</span>
@@ -114,7 +119,7 @@ function renderSelected() {
   if (amountToken) {
     amountToken.innerHTML = `
       <span style="display:flex;align-items:center;gap:10px;">
-        <img class="ico" src="${state.token.logo}" alt="${state.token.name} logo" style="width:24px;height:24px;">
+        <img class="ico" src="${state.token.logo}" alt="${state.token.name} logo" style="width:24px;height:24px;" onerror="${logoFallback('this', state.token.symbol[0])}">
         ${state.token.symbol}
       </span>
     `;
@@ -131,42 +136,48 @@ function renderRoutes(items) {
         <div class="route-top">
           <strong>No live routes yet</strong>
         </div>
-        <div>Router quotes will appear here once Across, Relay, and Zip are connected.</div>
+        <div>Router quotes will appear here once Across, Relay, and Gas.zip are connected.</div>
       </div>
     `;
     return;
   }
 
   root.innerHTML = items.map((route, index) => `
-    <a
-      class="route ${index === 0 ? 'active' : ''}"
-      href="${route.url}"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Open ${route.routerFullName}"
+    <button
+      class="route ${state.selectedRouteIndex === index ? 'active' : ''}"
+      type="button"
+      data-route="${index}"
+      aria-label="Select ${route.routerFullName} route"
     >
       <div class="route-top">
         <div class="route-brand">
-          <img src="${route.logo}" alt="${route.routerFullName} logo">
+          <img src="${route.logo}" alt="${route.routerFullName} logo" onerror="${logoFallback('this', route.router[0])}">
           <div>
             <div class="r-amt">${route.receiveAmount} ${route.receiveSymbol}</div>
             <div class="router-name">${route.routerFullName}</div>
           </div>
         </div>
 
-        <span class="badge ${route.badgeClass}">
-          ${route.badge}
-        </span>
+        <span class="badge ${route.badgeClass}">${route.badge}</span>
       </div>
 
       <div class="meta">
-        <span>via <b>${route.routerFullName}</b></span>
+        <span>
+          via
+          <a
+            href="${route.url}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="router-inline-link"
+            data-stop-route="true"
+          ><b>${route.routerFullName}</b></a>
+        </span>
         <span><b>${route.time}</b></span>
         <span>${route.gas}</span>
         <span>${route.slippage}</span>
         <span>${route.loss}</span>
       </div>
-    </a>
+    </button>
   `).join('');
 }
 
@@ -187,6 +198,19 @@ function bind() {
     state.token = tokens.find(t => t.id === btn.dataset.token) || state.token;
     renderTokens();
     renderSelected();
+  });
+
+  document.getElementById('routes')?.addEventListener('click', e => {
+    if (e.target.closest('[data-stop-route]')) {
+      e.stopPropagation();
+      return;
+    }
+
+    const btn = e.target.closest('[data-route]');
+    if (!btn) return;
+
+    state.selectedRouteIndex = Number(btn.dataset.route);
+    renderRoutes(routeData);
   });
 }
 
