@@ -1,18 +1,18 @@
-function renderRows(items, targetId) {
-  const root = document.getElementById(targetId);
-  root.innerHTML = items.map(item => `
-    <div class="row">
-      <img src="${item.logo}" alt="${item.name}" />
-      <div>
-        <div>${item.name}</div>
-        ${item.symbol ? `<small>${item.symbol}</small>` : ``}
-      </div>
-    </div>
-  `).join('');
-}
-
 function renderRoutes(items) {
   const root = document.getElementById('routes');
+
+  if (!items.length) {
+    root.innerHTML = `
+      <div class="route-card">
+        <div class="route-top">
+          <strong>No live routes yet</strong>
+        </div>
+        <div>Router quotes will appear here once Across, Relay, and Zip are connected.</div>
+      </div>
+    `;
+    return;
+  }
+
   root.innerHTML = items.map(route => `
     <div class="route-card">
       <div class="route-top">
@@ -29,7 +29,3 @@ function renderRoutes(items) {
     </div>
   `).join('');
 }
-
-renderRows(chains, 'chains');
-renderRows(tokens, 'tokens');
-renderRoutes(routes);
