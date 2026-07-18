@@ -8,24 +8,71 @@
 <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#0a0c10;--panel:#11141b;--panel2:#131721;--border:rgba(255,255,255,.09);--text:#f2f5fb;--muted:#8992a3;--muted2:#717b8e;--accent:#7db0ff;--accent2:#66d4a8;--radius:18px;--shadow:0 24px 80px rgba(0,0,0,.48)}
-*{box-sizing:border-box} html,body{margin:0;height:100%} body{font-family:'Satoshi',system-ui,sans-serif;background:radial-gradient(circle at top,#111723 0,#0a0c10 52%);color:var(--text)}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{font-family:'Satoshi',system-ui,sans-serif;background:radial-gradient(circle at top,#111723 0,#0a0c10 52%);color:var(--text)}
 body:before{content:'';position:fixed;inset:0;background-image:radial-gradient(rgba(255,255,255,.05) 1px, transparent 1px);background-size:18px 18px;opacity:.18;pointer-events:none}
+button,a{font:inherit}
+button{cursor:pointer}
+a{text-decoration:none;color:inherit}
 .wrap{min-height:100%;padding:28px;display:flex;justify-content:center;align-items:flex-start}
-.shell{width:min(1680px,100%);display:grid;grid-template-columns: 180px minmax(0,1fr);gap:16px;align-items:stretch}
+.shell{width:min(1680px,100%);display:grid;grid-template-columns:180px minmax(0,1fr);gap:16px;align-items:stretch}
 .panel{background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.015));border:1px solid var(--border);border-radius:22px;box-shadow:var(--shadow);overflow:hidden}
-.left{padding:16px;min-height:820px}.main{padding:14px 16px 16px;min-height:820px}
-.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}.brand{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:900}.logo{width:28px;height:28px;border-radius:10px;background:#f5f7fb;color:#0a0c10;display:grid;place-items:center;font-weight:900}
-.search{font-size:12px;color:var(--muted);margin:8px 0 14px;opacity:.85}.section{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted2);margin:16px 0 10px}.list{display:grid;gap:8px}.item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:14px;color:var(--text);font-size:15px}.item.active{background:#1a212f;border:1px solid rgba(125,176,255,.22)}.ico{width:22px;height:22px;border-radius:999px;overflow:hidden;flex:0 0 22px;background:#111}.ico img{width:100%;height:100%;object-fit:cover}.chev{margin-left:auto;color:#7f899b}
-.title{font-size:24px;font-weight:900;margin:0}.top-actions{display:flex;gap:12px}.btn{border:1px solid var(--border);background:#10141d;color:var(--text);border-radius:14px;padding:11px 18px;font-weight:700;display:flex;align-items:center;gap:8px}
-.grid{display:grid;grid-template-columns: 1.08fr .92fr;gap:16px;align-items:stretch}
+.left{padding:16px;min-height:820px}
+.main{padding:14px 16px 16px;min-height:820px}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.brand{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:900}
+.logo{width:28px;height:28px;border-radius:10px;background:#f5f7fb;color:#0a0c10;display:grid;place-items:center;font-weight:900}
+.search{font-size:12px;color:var(--muted);margin:8px 0 14px;opacity:.85}
+.section{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted2);margin:16px 0 10px}
+.list{display:grid;gap:8px}
+.item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:14px;color:var(--text);font-size:15px;background:transparent;border:1px solid transparent;width:100%;text-align:left}
+.item:hover{background:#151b26}
+.item.active{background:#1a212f;border:1px solid rgba(125,176,255,.22)}
+.ico{width:22px;height:22px;border-radius:999px;overflow:hidden;flex:0 0 22px;background:#111;display:block}
+.ico img{width:100%;height:100%;object-fit:cover}
+.chev{margin-left:auto;color:#7f899b}
+.title{font-size:24px;font-weight:900;margin:0}
+.top-actions{display:flex;gap:12px}
+.btn{border:1px solid var(--border);background:#10141d;color:var(--text);border-radius:14px;padding:11px 18px;font-weight:700;display:flex;align-items:center;gap:8px}
+.btn:hover{background:#151b26}
+.grid{display:grid;grid-template-columns:1.08fr .92fr;gap:16px;align-items:stretch}
 .col{background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.015));border:1px solid var(--border);border-radius:22px;min-height:748px;padding:16px}
-.col h2{font-size:18px;margin:0 0 4px}.col .sub{color:var(--muted);font-size:13px;margin-bottom:18px}
-.chain,.token{display:flex;align-items:center;gap:12px;padding:14px 12px;border-radius:14px}.chain.active,.token.active{background:#1b212d;border:1px solid rgba(255,255,255,.09)}
-.chain .name,.token .name{font-weight:700;font-size:15px}.rightval{margin-left:auto;color:#7f8795;font-size:13px}.manage{position:absolute;bottom:16px;left:16px;right:16px;padding:15px 14px;border:1px solid var(--border);border-radius:14px;background:#10141d;display:flex;align-items:center;justify-content:space-between}
-.mid{position:relative;width:100%;padding:18px}.swapbox{margin-top:8px;display:grid;gap:16px}.fieldlabel{font-size:12px;color:var(--muted);margin:0 0 8px;text-transform:uppercase;letter-spacing:.08em}.field{background:#0f131b;border:1px solid var(--border);border-radius:14px;padding:15px 16px;display:flex;align-items:center;justify-content:space-between;font-size:16px}.amount{font-size:38px;font-weight:900;letter-spacing:-.03em;color:#7a808c}
+.col h2{font-size:18px;margin:0 0 4px}
+.col .sub{color:var(--muted);font-size:13px;margin-bottom:18px}
+.chain,.token{display:flex;align-items:center;gap:12px;padding:14px 12px;border-radius:14px;background:transparent;border:1px solid transparent;width:100%;text-align:left}
+.chain:hover,.token:hover{background:#151b26}
+.chain.active,.token.active{background:#1b212d;border:1px solid rgba(255,255,255,.09)}
+.chain .name,.token .name{font-weight:700;font-size:15px}
+.rightval{margin-left:auto;color:#7f8795;font-size:13px}
+.manage{position:absolute;bottom:16px;left:16px;right:16px;padding:15px 14px;border:1px solid var(--border);border-radius:14px;background:#10141d;display:flex;align-items:center;justify-content:space-between}
+.mid{position:relative;width:100%;padding:18px}
+.swapbox{margin-top:8px;display:grid;gap:16px}
+.fieldlabel{font-size:12px;color:var(--muted);margin:0 0 8px;text-transform:uppercase;letter-spacing:.08em}
+.field{background:#0f131b;border:1px solid var(--border);border-radius:14px;padding:15px 16px;display:flex;align-items:center;justify-content:space-between;font-size:16px}
+.amount{font-size:38px;font-weight:900;letter-spacing:-.03em;color:#7a808c}
 .arrow{position:absolute;left:50%;top:185px;transform:translateX(-50%);width:42px;height:42px;border-radius:999px;background:#0f131b;border:1px solid var(--border);display:grid;place-items:center;color:var(--text)}
-.routes{margin-top:18px;display:grid;gap:12px}.route{background:#151a24;border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:16px}.route.active{background:linear-gradient(180deg,#26356a,#243563);border-color:rgba(125,176,255,.35)}.route-top{display:flex;align-items:center;justify-content:space-between;gap:12px}.r-amt{font-size:24px;font-weight:900}.badge{font-size:12px;font-weight:800;padding:7px 10px;border-radius:999px;background:#9db5ff;color:#1d2541}.badge.green{background:#97d69f;color:#18351f}.badge.gray{background:#8b95af;color:#111827}.meta{margin-top:10px;color:#aab2c1;font-size:13px;display:flex;flex-wrap:wrap;gap:14px}.meta b{color:#fff}.footer{margin-top:18px;color:#7f8796;font-size:12px}
-@media (max-width:1200px){.shell{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.left,.main{min-height:auto}.col{min-height:auto}}
+.routes{margin-top:18px;display:grid;gap:12px}
+.route{background:#151a24;border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:16px;display:block;cursor:pointer;transition:transform .15s ease,border-color .15s ease,background .15s ease;text-decoration:none;color:inherit}
+.route:hover{transform:translateY(-1px);border-color:rgba(125,176,255,.35)}
+.route.active{background:linear-gradient(180deg,#26356a,#243563);border-color:rgba(125,176,255,.35)}
+.route-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.route-brand{display:flex;align-items:center;gap:12px}
+.route-brand img{width:28px;height:28px;border-radius:999px;object-fit:cover}
+.r-amt{font-size:24px;font-weight:900}
+.router-name{margin-top:3px;color:#aab2c1;font-size:12px;font-weight:600}
+.badge{font-size:12px;font-weight:800;padding:7px 10px;border-radius:999px;background:#9db5ff;color:#1d2541}
+.badge.green{background:#97d69f;color:#18351f}
+.badge.gray{background:#8b95af;color:#111827}
+.meta{margin-top:10px;color:#aab2c1;font-size:13px;display:flex;flex-wrap:wrap;gap:14px}
+.meta b{color:#fff}
+.footer{margin-top:18px;color:#7f8796;font-size:12px}
+@media (max-width:1200px){
+  .shell{grid-template-columns:1fr}
+  .grid{grid-template-columns:1fr}
+  .left,.main{min-height:auto}
+  .col{min-height:auto}
+}
 </style>
 </head>
 <body>
@@ -35,56 +82,54 @@ body:before{content:'';position:fixed;inset:0;background-image:radial-gradient(r
       <div class="brand"><div class="logo">⌂</div>Bridge</div>
       <div class="search">Search Chains</div>
       <div class="section">Popular Chains</div>
-      <div class="list">
-        <div class="item"><div class="ico"><img src="./logos/chains/arc.png" alt="Arc"></div><div class="name">Arc</div><div class="chev">›</div></div>
-        <div class="item active"><div class="ico"><img src="./logos/chains/arbitrum.svg" alt="Arbitrum"></div><div class="name">Arbitrum</div><div class="chev">›</div></div>
-        <div class="item"><div class="ico"><img src="./logos/chains/ethereum.svg" alt="Ethereum"></div><div class="name">Ethereum</div><div class="chev">›</div></div>
-        <div class="item"><div class="ico"><img src="./logos/chains/base.svg" alt="Base"></div><div class="name">Base</div><div class="chev">›</div></div>
-        <div class="item"><div class="ico"><img src="./logos/chains/optimism.png" alt="Optimism"></div><div class="name">Optimism</div><div class="chev">›</div></div>
-        <div class="item"><div class="ico"><img src="./logos/chains/solana.png" alt="Solana"></div><div class="name">Solana</div><div class="chev">›</div></div>
-      </div>
+      <div class="list" id="chains"></div>
     </aside>
 
     <main class="panel main">
       <div class="topbar">
         <div><h1 class="title">Bridge</h1></div>
-        <div class="top-actions"><button class="btn">📄 History</button><button class="btn">⚙ Settings</button></div>
+        <div class="top-actions">
+          <button class="btn" type="button">📄 History</button>
+          <button class="btn" type="button">⚙ Settings</button>
+        </div>
       </div>
+
       <div class="grid">
         <section class="col">
           <h2>Bridge assets</h2>
           <div class="sub">Transfer tokens between chains</div>
+
           <div class="mid">
             <div class="swapbox">
               <div>
                 <div class="fieldlabel">From</div>
-                <div class="field"><span><img class="ico" src="./logos/chains/arbitrum.svg" alt="Arbitrum" style="width:24px;height:24px;display:inline-block;vertical-align:middle;margin-right:10px">Arbitrum</span><span>⌄</span></div>
+                <button class="field item" id="from-selected" type="button"></button>
               </div>
+
               <div class="arrow">↓</div>
+
               <div>
                 <div class="fieldlabel">To</div>
-                <div class="field" style="color:#7d8594">Select destination chain<span>⌄</span></div>
+                <button class="field item" id="to-selected" type="button" style="color:#7d8594">
+                  <span>Select destination chain</span>
+                  <span>⌄</span>
+                </button>
               </div>
+
               <div>
                 <div class="fieldlabel">Amount</div>
-                <div class="field"><span class="amount">0.0</span><span style="display:flex;align-items:center;gap:8px"><img class="ico" src="./logos/tokens/usdc.png" alt="USDC" style="width:24px;height:24px;display:inline-block">USDC</span></div>
+                <div class="field">
+                  <span class="amount">0.0</span>
+                  <button class="token item" id="amount-token" type="button" style="width:auto;padding:0;border:none;background:transparent"></button>
+                </div>
               </div>
-              <div class="field" style="justify-content:center;color:#7e8595;height:56px">Connect Wallet</div>
+
+              <button class="field btn" id="wallet-btn" type="button" style="justify-content:center;color:#7e8595;height:56px">
+                Connect Wallet
+              </button>
             </div>
-            <div class="routes">
-              <div class="route active">
-                <div class="route-top"><div class="r-amt">10.0000 ETH</div><div class="badge">Best Route</div></div>
-                <div class="meta"><span>via <b>Relay</b></span><span><b>a few seconds</b></span><span>gas <b>&lt; $0.01</b></span><span>slippage <b>0.01%</b></span><span>loss <b>0.00%</b></span></div>
-              </div>
-              <div class="route">
-                <div class="route-top"><div class="r-amt">9.9959 ETH</div><div class="badge gray">Fast</div></div>
-                <div class="meta"><span>via <b>Zip</b></span><span><b>a few seconds</b></span><span>gas <b>&lt; $0.01</b></span><span>slippage <b>0.05%</b></span><span>loss <b>0.041%</b></span></div>
-              </div>
-              <div class="route">
-                <div class="route-top"><div class="r-amt">9.9920 ETH</div><div class="badge green">Cheap</div></div>
-                <div class="meta"><span>via <b>Across</b></span><span><b>15 minutes</b></span><span>gas <b>&lt; $0.01</b></span><span>slippage <b>0.08%</b></span><span>loss <b>0.08%</b></span></div>
-              </div>
-            </div>
+
+            <div class="routes" id="routes"></div>
             <div class="footer">No live quotes yet — this is only layout. Add real quote API data later.</div>
           </div>
         </section>
@@ -92,19 +137,14 @@ body:before{content:'';position:fixed;inset:0;background-image:radial-gradient(r
         <section class="col" style="position:relative">
           <h2>Select token</h2>
           <div class="sub">Choose a token to bridge</div>
-          <div class="list">
-            <div class="token active"><div class="ico"><img src="./logos/tokens/usdc.png" alt="USDC"></div><div class="name">USDC</div><div class="rightval">USDC</div><div>✓</div></div>
-            <div class="token"><div class="ico"><img src="./logos/tokens/usdt.png" alt="USDT"></div><div class="name">USDT</div><div class="rightval">USDT</div></div>
-            <div class="token"><div class="ico"><img src="./logos/tokens/weth.png" alt="WETH"></div><div class="name">WETH</div><div class="rightval">WETH</div></div>
-            <div class="token"><div class="ico"><img src="./logos/tokens/eth.png" alt="ETH"></div><div class="name">ETH</div><div class="rightval">ETH</div></div>
-            <div class="token"><div class="ico"><img src="./logos/tokens/sol.png" alt="SOL"></div><div class="name">SOL</div><div class="rightval">SOL</div></div>
-            <div class="token"><div class="ico"><img src="./logos/tokens/bnb.png" alt="BNB"></div><div class="name">BNB</div><div class="rightval">BNB</div></div>
-          </div>
+          <div class="list" id="tokens"></div>
           <div class="manage">Manage Tokens <span>›</span></div>
         </section>
       </div>
     </main>
   </div>
 </div>
+
+<script src="./app.js"></script>
 </body>
 </html>
