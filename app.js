@@ -25,6 +25,7 @@ let state = {
 const routeData = [
   {
     router: 'Relay',
+    routerFullName: 'Relay Bridge',
     receiveAmount: '10.0000',
     receiveSymbol: 'ETH',
     receiveUsd: '$18,420.88',
@@ -33,10 +34,13 @@ const routeData = [
     slippage: 'slippage 0.01%',
     loss: 'loss 0.00%',
     url: 'https://relay.link',
-    logo: './logos/routers/relay.png'
+    logo: './logos/routers/relay.png',
+    badge: 'Best Route',
+    badgeClass: ''
   },
   {
     router: 'Zip',
+    routerFullName: 'Zip',
     receiveAmount: '9.9959',
     receiveSymbol: 'ETH',
     receiveUsd: '$18,413.41',
@@ -45,10 +49,13 @@ const routeData = [
     slippage: 'slippage 0.05%',
     loss: 'loss 0.041%',
     url: 'https://zipswap.io',
-    logo: './logos/routers/zip.png'
+    logo: './logos/routers/zip.png',
+    badge: 'Fast',
+    badgeClass: 'gray'
   },
   {
     router: 'Across',
+    routerFullName: 'Across Protocol',
     receiveAmount: '9.9920',
     receiveSymbol: 'ETH',
     receiveUsd: '$18,405.10',
@@ -57,7 +64,9 @@ const routeData = [
     slippage: 'slippage 0.08%',
     loss: 'loss 0.08%',
     url: 'https://across.to',
-    logo: './logos/routers/across.png'
+    logo: './logos/routers/across.png',
+    badge: 'Cheap',
+    badgeClass: 'green'
   }
 ];
 
@@ -66,7 +75,7 @@ function renderChains() {
   if (!root) return;
 
   root.innerHTML = chains.map(chain => `
-    <button class="item ${state.fromChain && state.fromChain.id === chain.id ? 'active' : ''}" data-chain="${chain.id}" type="button">
+    <button class="item ${state.fromChain?.id === chain.id ? 'active' : ''}" data-chain="${chain.id}" type="button">
       <div class="ico"><img src="${chain.logo}" alt="${chain.name} logo"></div>
       <div class="name">${chain.name}</div>
       <div class="chev">›</div>
@@ -79,36 +88,24 @@ function renderTokens() {
   if (!root) return;
 
   root.innerHTML = tokens.map(token => `
-    <button class="token ${state.token && state.token.id === token.id ? 'active' : ''}" data-token="${token.id}" type="button">
+    <button class="token ${state.token?.id === token.id ? 'active' : ''}" data-token="${token.id}" type="button">
       <div class="ico"><img src="${token.logo}" alt="${token.name} logo"></div>
       <div class="name">${token.name}</div>
       <div class="rightval">${token.symbol}</div>
-      ${state.token && state.token.id === token.id ? '<div>✓</div>' : ''}
+      ${state.token?.id === token.id ? '<div>✓</div>' : ''}
     </button>
   `).join('');
 }
 
 function renderSelected() {
   const from = document.getElementById('from-selected');
-  const token = document.getElementById('token-selected');
   const amountToken = document.getElementById('amount-token');
-  const tokenLabel = document.getElementById('token-label');
 
   if (from) {
     from.innerHTML = `
-      <span>
-        <img class="ico" src="${state.fromChain.logo}" alt="${state.fromChain.name}" style="width:24px;height:24px;display:inline-block;vertical-align:middle;margin-right:10px">
+      <span style="display:flex;align-items:center;gap:10px;">
+        <img class="ico" src="${state.fromChain.logo}" alt="${state.fromChain.name} logo" style="width:24px;height:24px;">
         ${state.fromChain.name}
-      </span>
-      <span>⌄</span>
-    `;
-  }
-
-  if (token) {
-    token.innerHTML = `
-      <span>
-        <img class="ico" src="${state.token.logo}" alt="${state.token.name}" style="width:24px;height:24px;display:inline-block;vertical-align:middle;margin-right:10px">
-        ${state.token.name}
       </span>
       <span>⌄</span>
     `;
@@ -116,24 +113,21 @@ function renderSelected() {
 
   if (amountToken) {
     amountToken.innerHTML = `
-      <img class="ico" src="${state.token.logo}" alt="${state.token.name}" style="width:24px;height:24px;display:inline-block">
-      ${state.token.symbol}
+      <span style="display:flex;align-items:center;gap:10px;">
+        <img class="ico" src="${state.token.logo}" alt="${state.token.name} logo" style="width:24px;height:24px;">
+        ${state.token.symbol}
+      </span>
     `;
-  }
-
-  if (tokenLabel) {
-    tokenLabel.textContent = state.token.symbol;
   }
 }
 
 function renderRoutes(items) {
   const root = document.getElementById('routes');
-
   if (!root) return;
 
   if (!items.length) {
     root.innerHTML = `
-      <div class="route-card">
+      <div class="route">
         <div class="route-top">
           <strong>No live routes yet</strong>
         </div>
@@ -143,23 +137,30 @@ function renderRoutes(items) {
     return;
   }
 
-  root.innerHTML = items.map(route => `
-    <a class="route-card route-link" href="${route.url}" target="_blank" rel="noopener noreferrer">
+  root.innerHTML = items.map((route, index) => `
+    <a
+      class="route ${index === 0 ? 'active' : ''}"
+      href="${route.url}"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Open ${route.routerFullName}"
+    >
       <div class="route-top">
-        <div class="router-brand">
-          <img src="${route.logo}" alt="${route.router} logo">
+        <div class="route-brand">
+          <img src="${route.logo}" alt="${route.routerFullName} logo">
           <div>
-            <div class="route-amount">${route.receiveAmount} ${route.receiveSymbol}</div>
-            <div class="router-name">${route.router}</div>
+            <div class="r-amt">${route.receiveAmount} ${route.receiveSymbol}</div>
+            <div class="router-name">${route.routerFullName}</div>
           </div>
         </div>
-        <span class="route-pill ${route.router === 'Relay' ? '' : route.router === 'Zip' ? 'gray' : 'green'}">
-          ${route.router === 'Relay' ? 'Best Route' : route.router === 'Zip' ? 'Fast' : 'Cheap'}
+
+        <span class="badge ${route.badgeClass}">
+          ${route.badge}
         </span>
       </div>
-      <div class="route-quote">${route.receiveUsd}</div>
-      <div class="route-meta">
-        <span>via <b>${route.router}</b></span>
+
+      <div class="meta">
+        <span>via <b>${route.routerFullName}</b></span>
         <span><b>${route.time}</b></span>
         <span>${route.gas}</span>
         <span>${route.slippage}</span>
@@ -173,6 +174,7 @@ function bind() {
   document.getElementById('chains')?.addEventListener('click', e => {
     const btn = e.target.closest('[data-chain]');
     if (!btn) return;
+
     state.fromChain = chains.find(c => c.id === btn.dataset.chain) || state.fromChain;
     renderChains();
     renderSelected();
@@ -181,6 +183,7 @@ function bind() {
   document.getElementById('tokens')?.addEventListener('click', e => {
     const btn = e.target.closest('[data-token]');
     if (!btn) return;
+
     state.token = tokens.find(t => t.id === btn.dataset.token) || state.token;
     renderTokens();
     renderSelected();
